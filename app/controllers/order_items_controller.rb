@@ -7,6 +7,7 @@ if @order.new_record?
 session[:order_id] = @order.id
 end 
 end
+
   # GET /order_items
   # GET /order_items.json
   
@@ -41,7 +42,7 @@ def create
 end
 end
 end
-end
+
   # PUT /order_items/1
   # PUT /order_items/1.json
   def update

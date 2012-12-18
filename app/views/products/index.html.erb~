@@ -6,7 +6,8 @@
 <th>Title</th>
 <th>Description</th>  
 <th>Price</th>
-
+<th>Stock</th>
+<th>Buy</th>
       </tr>
 
 <% @products.each do |product| %>
@@ -14,7 +15,8 @@
 <td><%= image_tag "/images/products/#{product.image_url}" %></td>
 <td><span class="product_title"><%= product.title %></span><%= product.description %></td>
 <td><%= print_price(product.price) %></td>
-
+<td><%= print_stock(product.stock) %></td>
+<td><%= link_to 'Add to Cart',new_order_item_path(product_id: product.id) %></td>
 <td><%= link_to 'Show', product %></td>
 <td><%= link_to 'Edit', edit_product_path(product) %></td>
 <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>

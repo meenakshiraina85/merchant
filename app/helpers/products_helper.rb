@@ -4,9 +4,9 @@ def print_price(price)
 end
 def print_stock(stock)
 if stock > 0
-In Stock 
+"In Stock" 
 else
-Out of Stock
+"Out of Stock"
 end
 end
 end

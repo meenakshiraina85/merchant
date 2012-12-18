@@ -1,5 +1,12 @@
 class OrderItemsController < ApplicationController
 before_filter :load_order
+def load_order
+@order = Order.find_or_initialize_by_id(session[:order_id], status: "unsubmitted")
+if @order.new_record?
+@order.save!
+session[:order_id] = @order.id
+end 
+end
   # GET /order_items
   # GET /order_items.json
   
@@ -19,16 +26,22 @@ before_filter :load_order
 
   # POST /order_items
   # POST /order_items.json
-def create
-@order_item = @order.order_items.new(quantity: 1, product_id: params[:product_id])
-if @order_item.save
-redirect_to @order, notice: "Successfully created order item."
-else
-render action: 'new'
-end
-end
 
 
+def create 
+    @order_item = @order.order_items.new(quantity: 1, product_id: params[:product_id]) 
+
+    respond_to do |format| 
+      if @order_item.save 
+        format.html { redirect_to @order, notice: 'Order item was successfully created.' } 
+        format.json { render json: @order, status: :created, location: @order_item } 
+      else 
+        format.html { render action: "new" } 
+        format.json { render json: @order.errors, status: :unprocessable_entity } 
+end
+end
+end
+end
   # PUT /order_items/1
   # PUT /order_items/1.json
   def update
